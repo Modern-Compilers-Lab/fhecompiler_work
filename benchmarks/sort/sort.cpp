@@ -149,7 +149,7 @@ int main(int argc, char **argv)
 
   int window = 0;
   if (argc > 4) 
-    window = stoi(argv[4]); 
+    window = stoi(argv[4]);
 
   bool call_quantifier = true;
   if (argc > 5)
@@ -163,11 +163,17 @@ int main(int argc, char **argv)
   if (argc > 7)
     const_folding = stoi(argv[7]); 
 
+  float w_ops = 0.5;
+  float w_keys = 0.5;
+
+  if (argc > 8) w_ops = stof(argv[8]);
+  if (argc > 9) w_keys = stof(argv[9]);
+
   if (cse)
   {
     Compiler::enable_cse();
     Compiler::enable_order_operands();
-  }
+  } 
   else
   {
     Compiler::disable_cse();
@@ -184,7 +190,7 @@ int main(int argc, char **argv)
   string func_name = "fhe";
   /**************/t = chrono::high_resolution_clock::now();
   if (vectorize_code)
-  { 
+  {
     const auto &func = Compiler::create_func(func_name, 1, 20, false, true);
     fhe(slot_count);
     string gen_name = "_gen_he_" + func_name;
@@ -198,13 +204,13 @@ int main(int argc, char **argv)
     cout << " window is " << window << endl;
     /********** vectorization Part *******************************/
     if(VECTORIZATION_ENABLED){
-    Compiler::gen_vectorized_code(func, window,optimization_method);  // add a flag to specify if the benchmark is structured or no
+      Compiler::gen_vectorized_code(func, window,optimization_method, w_ops, w_keys);  // add a flag to specify if the benchmark is structured or no
     }
     /********** Simplification & depth reduction Part ************/
-    if(SIMPLIFICATION_ENABLED){ 
-    auto ruleset = Compiler::Ruleset::depth;
-    auto rewrite_heuristic = trs::RewriteHeuristic::bottom_up;
-    Compiler::compile(func, ruleset, rewrite_heuristic);
+    if(SIMPLIFICATION_ENABLED){
+      auto ruleset = Compiler::Ruleset::depth;
+      auto rewrite_heuristic = trs::RewriteHeuristic::bottom_up;
+      Compiler::compile(func, ruleset, rewrite_heuristic);
     }
     /********** FHE code generation  *****************************/
     Compiler::gen_he_code(func, header_os, gen_name + ".hpp", source_os);
@@ -220,7 +226,7 @@ int main(int argc, char **argv)
   }
   else
   {
-    const auto &func = Compiler::create_func(func_name, 1, 20, false, true);
+    const auto &func = Compiler::create_func(func_name, slot_count, 20, false, true);
     // update_io_file 
     std::string updated_inputs_file_name = "fhe_io_example_adapted.txt" ;
     std::string inputs_file_name = "fhe_io_example.txt";

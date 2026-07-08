@@ -13,11 +13,14 @@ import subprocess
 
 
 
-def create_rules(path: str) -> dict:
+def create_rules(rules_path: str, rotations_rules_path: str) -> dict:
     
-    rules_text = open(path,'r').read().replace("?","")
+    rules_text = open(rules_path,'r').read().replace("?","")
+    rotations_rules_text = open(rotations_rules_path,'r').read().replace("?","")
     rules = parse_rules_from_text(rules_text)
-    
+    rotations_rules = parse_rules_from_text(rotations_rules_text)
+    rules.extend(rotations_rules)
+
     rules_dict = {rule.name: rule for rule in rules}
     return rules_dict 
 

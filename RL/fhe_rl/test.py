@@ -10,7 +10,7 @@ import os
 import torch
 def test_agent(expressions_file: str,embeddings_model, model_filepath: str):
     expressions = load_expressions(expressions_file)
-    rules_list = create_rules("rules.txt")
+    rules_list = create_rules("rules.txt", 'rotations_rules.txt')
     rules_list["END"] = None
     results = []
     max_positions = 16

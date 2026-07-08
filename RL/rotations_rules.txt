@@ -1,0 +1,7 @@
+Rewrite { name: "rotate_32", searcher: (<< ?a 32), applier: (<< (<< ?a 16) 16) }
+Rewrite { name: "rotate_16", searcher: (<< ?a 16), applier: (<< (<< ?a 8) 8) }
+Rewrite { name: "rotate_8", searcher: (<< ?a 8), applier: (<< (<< ?a 4) 4) }
+Rewrite { name: "rotate_4", searcher: (<< ?a 4), applier: (<< (<< ?a 2) 2) }
+Rewrite { name: "rotate_2", searcher: (<< ?a 2), applier: (<< (<< ?a 1) 1) }
+Rewrite { name: "rotate_9", searcher: (<< ?a 9), applier: (<< (<< (<< ?a 3) 3) 3) }
+Rewrite { name: "rotate_3", searcher: (<< ?a 3), applier: (<< (<< ?a 1) 2) }

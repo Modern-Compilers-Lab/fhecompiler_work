@@ -21,8 +21,7 @@ unordered_set<int> reduce_rotation_keys(const shared_ptr<ir::Func> &func, size_t
     {
       auto steps = term->op_code().steps();
       ++steps_freq[steps];
-      if (!util::is_power_of_two(abs(steps)))
-        decomp_candidate_terms.insert(func->data_flow().get_term(term->id()));
+      decomp_candidate_terms.insert(func->data_flow().get_term(term->id()));
     }
   }
 
@@ -38,10 +37,17 @@ unordered_set<int> reduce_rotation_keys(const shared_ptr<ir::Func> &func, size_t
   unordered_map<int, vector<int>> steps_nafs;
   for (auto steps : ordered_used_steps)
   {
-    if (util::is_power_of_two(abs(steps)))
-      steps_nafs.emplace(steps, vector<int>{steps});
+    if (util::is_power_of_two(abs(steps)) && abs(steps) > 1)
+    {
+      // Binary decomposition: split power of 2 into two halves
+      int half = steps / 2;
+      steps_nafs.emplace(steps, vector<int>{half, half});
+    }
     else
+    {
+      // NAF decomposition for non-powers of 2
       steps_nafs.emplace(steps, naf(steps));
+    }
   }
 
   unordered_map<int, int> steps_costs;
@@ -66,12 +72,12 @@ unordered_set<int> reduce_rotation_keys(const shared_ptr<ir::Func> &func, size_t
   for (size_t i = 0; i < init_steps_count; ++i)
   {
     auto min_cost_steps = ordered_used_steps.back();
-    if (util::is_power_of_two(abs(min_cost_steps)))
-    {
-      used_steps.insert(min_cost_steps);
-      ordered_used_steps.pop_back();
-      continue;
-    }
+    // if (util::is_power_of_two(abs(min_cost_steps)))
+    // {
+    //   used_steps.insert(min_cost_steps);
+    //   ordered_used_steps.pop_back();
+    //   continue;
+    // }
     steps_to_decomp.insert(min_cost_steps);
     ordered_used_steps.pop_back();
     keys_count -= 1;

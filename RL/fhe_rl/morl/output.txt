@@ -1,0 +1,132 @@
+ window is 0
+Using DDP with world size: 1
+Assigned device: cpu
+Using DDP with world size: 1
+Assigned device: cpu
+Loading embeddings with tokenizer type: dynamic
+Number of unique valid expressions (excluding validation): 1
+['(Vec ( + ( + ( * v1_0 v2_0 ) ( * v1_1 v2_1 ) ) ( + ( * v1_2 v2_2 ) ( * v1_3 v2_3 ) ) ) )']
+
+[34m======================================== EPISODE START ========================================[0m
+[1m[35mOptimization Mode[0m  : [36mLOCKED (EVALUATION)[0m
+
+[36m----------------------------------------------------------------------------------------------------[0m
+[1m[35mOld expression[0m: [33m(Vec ( + ( + ( * v1_0 v2_0 ) ( * v1_1 v2_1 ) ) ( + ( * v1_2 v2_2 ) ( * v1_3 v2_3 ) ) ) )[0m
+[1m[35mOld exec cost      [0m: [31m1756.0[0m
+[1m[35mOld keys cost      [0m: [31m0.0[0m
+[1m[35mNew expression[0m: [33m(VecAdd (Vec (+ (* v1_0 v2_0) (* v1_1 v2_1)) (+ (* v1_2 v2_2) (* v1_3 v2_3))) (<< (Vec (+ (* v1_0 v2_0) (* v1_1 v2_1)) (+ (* v1_2 v2_2) (* v1_3 v2_3))) 1))[0m
+[1m[35mNew exec cost      [0m: [31m1559.0[0m
+[1m[35mNew keys cost      [0m: [31m1.0[0m
+[1m[35mReward        [0m: [32m0.11218678951263428[0m
+[1m[35mRule name     [0m: [36mrot-add-vectorize[0m
+[1m[35mAt position   [0m: [34m0[0m
+[36m----------------------------------------------------------------------------------------------------[0m
+
+[36m----------------------------------------------------------------------------------------------------[0m
+[1m[35mOld expression[0m: [33m(VecAdd (Vec (+ (* v1_0 v2_0) (* v1_1 v2_1)) (+ (* v1_2 v2_2) (* v1_3 v2_3))) (<< (Vec (+ (* v1_0 v2_0) (* v1_1 v2_1)) (+ (* v1_2 v2_2) (* v1_3 v2_3))) 1))[0m
+[1m[35mOld exec cost      [0m: [31m1559.0[0m
+[1m[35mOld keys cost      [0m: [31m1.0[0m
+[1m[35mNew expression[0m: [33m(VecAdd (VecAdd (Vec (* v1_0 v2_0) (* v1_2 v2_2) (* v1_1 v2_1) (* v1_3 v2_3)) (<< (Vec (* v1_0 v2_0) (* v1_2 v2_2) (* v1_1 v2_1) (* v1_3 v2_3)) 2)) (<< (VecAdd (Vec (* v1_0 v2_0) (* v1_2 v2_2) (* v1_1 v2_1) (* v1_3 v2_3)) (<< (Vec (* v1_0 v2_0) (* v1_2 v2_2) (* v1_1 v2_1) (* v1_3 v2_3)) 2)) 1))[0m
+[1m[35mNew exec cost      [0m: [31m1115.0[0m
+[1m[35mNew keys cost      [0m: [31m2.0[0m
+[1m[35mReward        [0m: [32m0.28479793667793274[0m
+[1m[35mRule name     [0m: [36mrot-add-vectorize[0m
+[1m[35mAt position   [0m: [34m0[0m
+[36m----------------------------------------------------------------------------------------------------[0m
+
+[36m----------------------------------------------------------------------------------------------------[0m
+[1m[35mOld expression[0m: [33m(VecAdd (VecAdd (Vec (* v1_0 v2_0) (* v1_2 v2_2) (* v1_1 v2_1) (* v1_3 v2_3)) (<< (Vec (* v1_0 v2_0) (* v1_2 v2_2) (* v1_1 v2_1) (* v1_3 v2_3)) 2)) (<< (VecAdd (Vec (* v1_0 v2_0) (* v1_2 v2_2) (* v1_1 v2_1) (* v1_3 v2_3)) (<< (Vec (* v1_0 v2_0) (* v1_2 v2_2) (* v1_1 v2_1) (* v1_3 v2_3)) 2)) 1))[0m
+[1m[35mOld exec cost      [0m: [31m1115.0[0m
+[1m[35mOld keys cost      [0m: [31m2.0[0m
+[1m[35mNew expression[0m: [33m(VecAdd (VecAdd (VecMul (Vec v1_0 v1_2 v1_1 v1_3) (Vec v2_0 v2_2 v2_1 v2_3)) (<< (VecMul (Vec v1_0 v1_2 v1_1 v1_3) (Vec v2_0 v2_2 v2_1 v2_3)) 2)) (<< (VecAdd (VecMul (Vec v1_0 v1_2 v1_1 v1_3) (Vec v2_0 v2_2 v2_1 v2_3)) (<< (VecMul (Vec v1_0 v1_2 v1_1 v1_3) (Vec v2_0 v2_2 v2_1 v2_3)) 2)) 1))[0m
+[1m[35mNew exec cost      [0m: [31m215.0[0m
+[1m[35mNew keys cost      [0m: [31m2.0[0m
+[1m[35mReward        [0m: [32m0.8071748614311218[0m
+[1m[35mRule name     [0m: [36mmul-vectorize[0m
+[1m[35mAt position   [0m: [34m0[0m
+[36m----------------------------------------------------------------------------------------------------[0m
+
+[36m----------------------------------------------------------------------------------------------------[0m
+[1m[35mOld expression[0m: [33m(VecAdd (VecAdd (VecMul (Vec v1_0 v1_2 v1_1 v1_3) (Vec v2_0 v2_2 v2_1 v2_3)) (<< (VecMul (Vec v1_0 v1_2 v1_1 v1_3) (Vec v2_0 v2_2 v2_1 v2_3)) 2)) (<< (VecAdd (VecMul (Vec v1_0 v1_2 v1_1 v1_3) (Vec v2_0 v2_2 v2_1 v2_3)) (<< (VecMul (Vec v1_0 v1_2 v1_1 v1_3) (Vec v2_0 v2_2 v2_1 v2_3)) 2)) 1))[0m
+[1m[35mOld exec cost      [0m: [31m215.0[0m
+[1m[35mOld keys cost      [0m: [31m2.0[0m
+[1m[35mNew expression[0m: [33m(VecAdd (VecAdd (VecMul (Vec v1_0 v1_2 v1_1 v1_3) (Vec v2_0 v2_2 v2_1 v2_3)) (<< (VecMul (Vec v1_0 v1_2 v1_1 v1_3) (Vec v2_0 v2_2 v2_1 v2_3)) 2)) (<< (VecAdd (VecMul (Vec v1_0 v1_2 v1_1 v1_3) (Vec v2_0 v2_2 v2_1 v2_3)) (<< (VecMul (Vec v1_0 v1_2 v1_1 v1_3) (Vec v2_0 v2_2 v2_1 v2_3)) 2)) 1))[0m
+[1m[35mNew exec cost      [0m: [31m215.0[0m
+[1m[35mNew keys cost      [0m: [31m2.0[0m
+[1m[35mReward        [0m: [32m87.75626420974731[0m
+[1m[35mRule name     [0m: [36mEND[0m
+[1m[35mAt position   [0m: [34m0[0m
+[36m----------------------------------------------------------------------------------------------------[0m
+
+[1m[35mInitial exec cost [0m: [33m1756.0[0m
+[1m[35mInitial keys cost [0m: [33m0.0[0m
+[1m[35mFinal exec cost   [0m: [32m215.0[0m
+[1m[35mFinal keys cost   [0m: [32m2.0[0m
+
+[34m======================================== EPISODE START ========================================[0m
+[1m[35mOptimization Mode[0m  : [36mLOCKED (EVALUATION)[0m
+Call the code vectorizer 
+Executing RL Inference with weights: [1, 0]
+==> stop_reached : 1 
+===> First_Step_FVC : 
+===> Second_Step_FVC : 
+===> Third_Step_FVC : 
+==> stop_reached : 1 
+5506.83 ms
+----------------------------------------------------------------------------------------------------
+global_metrics
+global_metrics not computed
+----------------------------------------------------------------------------------------------------
+depth_metrics
+ctxt_leaves_*: (depth, xdepth)
+max: (5, 1)
+avg: (5, 1)
+min: (5, 1)
+----------------------------------------------------------------------------------------------------
+terms_classes_metrics
+|terms|: 8
+captured_terms: 8 (100%)
+|ctxt_inputs|: 2
+|ptxt_leaves|: 0
+|constants|: 0
+|ptxt_ptxt_ops|: 0
+|constants_ops|: 0
+operations_static_cost: 1.77
+----------------------------------------------------------------------------------------------------
+|mul| (level, arg1_size, arg2_size): count
+(L-0, 2, 2): 1
+total: 1
+----------------------------------------------------------------------------------------------------
+|square| (level, arg_size): count
+total: 0
+----------------------------------------------------------------------------------------------------
+|encrypt|: 0
+----------------------------------------------------------------------------------------------------
+|relin| (level, arg_size): count
+(L-0, 3): 1
+total: 1
+----------------------------------------------------------------------------------------------------
+|rotate| (level, arg_size): count
+(L-0, 2): 2
+total: 2
+----------------------------------------------------------------------------------------------------
+|mul_plain| (level, ctxt_arg_size): count
+total: 0
+----------------------------------------------------------------------------------------------------
+|mul_scalar| (level, ctxt_arg_size): count
+total: 0
+----------------------------------------------------------------------------------------------------
+|mul_non_scalar| (level, ctxt_arg_size): count
+total: 0
+----------------------------------------------------------------------------------------------------
+|mod_switch| (level, arg_size): count
+total: 0
+----------------------------------------------------------------------------------------------------
+|he_add| (level, max_args_size): count
+(L-0, 2): 2
+total: 2
+----------------------------------------------------------------------------------------------------
+|rotation_keys|: 2
+|relin_keys|: 1
+[31m  Could not parse costs — ops=None, keys=None[0m
+None

@@ -1,0 +1,6 @@
+cost = 2947
+time = 1700
+source /share/apps/NYUAD5/miniconda/3-4.11.0/bin/activate
+conda activate chehabEnv
+
+python3 run_benchmarks.py

@@ -38,8 +38,8 @@ def load_embeddings(tokenizer_type=None, checkpoint_path=None, device=None):
     else:
         model = load_embedding_model_dynamic(checkpoint_path, device)
         return model, None  
-def create_rules(path):
-    return _create_rules(path=path)
+def create_rules(rules_path, rotations_rules_path):
+    return _create_rules(rules_path, rotations_rules_path)
 
 def load_embedding_model_dynamic(checkpoint_path=None, device=DEVICE):
     embeddings_model = TRAE()  
@@ -183,7 +183,7 @@ def load_expressions(file_path: str,validation_exprs = []):
 
 def mlp(in_dim, hidden_dims, out_dim, *,
         act=nn.GELU, layernorm=True, dropout=0.0,
-        residual=False):
+        residual=False, seed=None):
     """
     Build an MLP: [in_dim] → hidden_dims* → [out_dim]
 
@@ -192,6 +192,11 @@ def mlp(in_dim, hidden_dims, out_dim, *,
     hidden_dims : list[int]  (e.g. [1024, 1024, 512])
     residual    : if True, adds skip-connections every two layers
     """
+
+    if seed is not None:
+        torch.manual_seed(seed)
+        torch.cuda.manual_seed(seed)
+
     layers, prev = [], in_dim
     for i, h in enumerate(hidden_dims):
         layers.append(nn.Linear(prev, h))

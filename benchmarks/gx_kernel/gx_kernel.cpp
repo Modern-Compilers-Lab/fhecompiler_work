@@ -94,17 +94,23 @@ int main(int argc, char **argv)
   if (argc > 7)
     const_folding = stoi(argv[7]); 
 
+  float w_ops = 0.5;
+  float w_keys = 0.5;
+
+  if (argc > 8) w_ops = stof(argv[8]);
+  if (argc > 9) w_keys = stof(argv[9]);
 
   if (cse)
   {
     Compiler::enable_cse();
     Compiler::enable_order_operands();
-  }
+  } 
   else
   {
     Compiler::disable_cse();
     Compiler::disable_order_operands();
   }
+
   if (const_folding)
     Compiler::enable_const_folding();
   else
@@ -124,12 +130,12 @@ int main(int argc, char **argv)
     if (!header_os)
       throw logic_error("failed to create header file");
     ofstream source_os(gen_path + ".cpp");
-    if (!source_os) 
+    if (!source_os)
       throw logic_error("failed to create source file");
     cout << " window is " << window << endl;
     /********** vectorization Part *******************************/
     if(VECTORIZATION_ENABLED){
-      Compiler::gen_vectorized_code(func, window, optimization_method);  // add a flag to specify if the benchmark is structured or no
+      Compiler::gen_vectorized_code(func, window,optimization_method, w_ops, w_keys);  // add a flag to specify if the benchmark is structured or no
     }
     /********** Simplification & depth reduction Part ************/
     if(SIMPLIFICATION_ENABLED){
@@ -151,34 +157,34 @@ int main(int argc, char **argv)
   }
   else
   {
-      const auto &func = Compiler::create_func(func_name,slot_count*slot_count, 20, false, true);
-      // update io file 
-      std::string updated_inputs_file_name = "fhe_io_example_adapted.txt" ;
-      std::string inputs_file_name = "fhe_io_example.txt";
-      util::copyFile(inputs_file_name,updated_inputs_file_name);
-      fhe(slot_count);
-      string gen_name = "_gen_he_" + func_name;
-      string gen_path = "he/" + gen_name;
-      ofstream header_os(gen_path + ".hpp");
-      if (!header_os)
-        throw logic_error("failed to create header file");
-      ofstream source_os(gen_path + ".cpp");
-      if (!source_os) 
-        throw logic_error("failed to create source file");
-      cout << " window is " << window << endl;
-      auto ruleset = Compiler::Ruleset::simplification_ruleset;
-      auto rewrite_heuristic = trs::RewriteHeuristic::bottom_up;
-      Compiler::compile(func, ruleset, rewrite_heuristic);
-      Compiler::gen_he_code(func, header_os, gen_name + ".hpp", source_os, 29);
-      /************/elapsed = chrono::high_resolution_clock::now() - t;
-      cout<<"Compile time : \n";
-      cout << elapsed.count() << " ms\n";
-      if (call_quantifier)
-      {
-        util::Quantifier quantifier{func};
-        quantifier.run_all_analysis();
-        quantifier.print_info(cout);
-      }
+    const auto &func = Compiler::create_func(func_name, slot_count, 20, false, true);
+    // update_io_file 
+    std::string updated_inputs_file_name = "fhe_io_example_adapted.txt" ;
+    std::string inputs_file_name = "fhe_io_example.txt";
+    util::copyFile(inputs_file_name,updated_inputs_file_name);
+    fhe(slot_count);
+    string gen_name = "_gen_he_" + func_name;
+    string gen_path = "he/" + gen_name;
+    ofstream header_os(gen_path + ".hpp");
+    if (!header_os)
+      throw logic_error("failed to create header file");
+    ofstream source_os(gen_path + ".cpp");
+    if (!source_os)
+      throw logic_error("failed to create source file");
+    cout << " window is " << window << endl;
+    auto ruleset = Compiler::Ruleset::simplification_ruleset;
+    auto rewrite_heuristic = trs::RewriteHeuristic::bottom_up;
+    Compiler::compile(func, ruleset, rewrite_heuristic);
+    Compiler::gen_he_code(func, header_os, gen_name + ".hpp", source_os);
+    /************/elapsed = chrono::high_resolution_clock::now() - t;
+    cout<<"Compile time : \n";
+    cout << elapsed.count() << " ms\n";
+    if (call_quantifier)
+    {
+      util::Quantifier quantifier{func};
+      quantifier.run_all_analysis();
+      quantifier.print_info(cout);
+    }
   }
   return 0;
 }
